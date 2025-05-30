@@ -1,6 +1,3 @@
-"""
-Módulo de autenticação e conexão com o banco de dados SQL Server.
-"""
 import pyodbc
 import logging
 from . import secret
@@ -10,19 +7,6 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 def get_connection(driver="ODBC Driver 17 for SQL Server", intent="ReadOnly"):
-    """
-    Estabelece conexão com o banco de dados SQL Server usando autenticação MFA.
-    
-    Args:
-        driver (str): Driver ODBC a ser utilizado.
-        intent (str): Intenção da aplicação (ReadOnly ou ReadWrite).
-        
-    Returns:
-        pyodbc.Connection: Objeto de conexão com o banco de dados.
-        
-    Raises:
-        Exception: Erro ao conectar ao banco de dados.
-    """
     connection_string = (
         f"Driver={{{driver}}};"
         f"Server={secret.SERVIDOR};"
