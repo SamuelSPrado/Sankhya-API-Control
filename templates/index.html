@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integração Sankhya</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Menu Lateral -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Integração Sankhya</h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#" data-section="reprocessamento">
+                        <i class="fas fa-sync-alt"></i> Reprocessamento de Pedidos
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="importacao">
+                        <i class="fas fa-file-import"></i> Importação de Produtos
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="validacao">
+                        <i class="fas fa-check-circle"></i> Validação de Caixa
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <p>© 2025 Integração Sankhya</p>
+            </div>
+        </nav>
+
+        <!-- Conteúdo da Página -->
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h2 id="page-title">Reprocessamento de Pedidos</h2>
+                </div>
+            </nav>
+
+            <!-- Seção: Reprocessamento de Pedidos -->
+            <section id="reprocessamento" class="content-section active">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Reprocessamento de Pedidos</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input type="text" id="pedidoId" placeholder="ID do Pedido" class="form-control">
+                            <button id="btnValidarPedido" class="btn btn-primary">
+                                <i class="fas fa-database"></i> Validar
+                            </button>
+                            <button id="btnReprocessarPedido" class="btn btn-success">
+                                <i class="fas fa-sync-alt"></i> Reprocessar
+                            </button>
+                            <button id="btnLimparPedido" class="btn btn-secondary">
+                                <i class="fas fa-eraser"></i> Limpar
+                            </button>
+                        </div>
+
+                        <div class="result-section">
+                            <h4>Status Code</h4>
+                            <div id="statusCodeResult" class="result-box"></div>
+                        </div>
+
+                        <div class="result-section">
+                            <h4>Data Base</h4>
+                            <div id="databaseResult" class="result-box">
+                                <table id="pedidoTable" class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>SANKHYAID</th>
+                                            <th>DISCOUNT</th>
+                                            <th>VALUE</th>
+                                            <th>ORDERDATE</th>
+                                            <th>ERRORMESSAGE</th>
+                                            <th>DATE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Dados serão inseridos aqui via JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção: Importação de Produtos -->
+            <section id="importacao" class="content-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Importação de Produtos</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input type="text" id="produtoId" placeholder="ID do Produto" class="form-control">
+                            <button id="btnImportarProduto" class="btn btn-success">
+                                <i class="fas fa-file-import"></i> Importar
+                            </button>
+                            <button id="btnLimparProduto" class="btn btn-secondary">
+                                <i class="fas fa-eraser"></i> Limpar
+                            </button>
+                        </div>
+
+                        <div class="result-section">
+                            <div class="result-grid">
+                                <div class="result-item">
+                                    <h4>Status Code</h4>
+                                    <div id="produtoStatusCode" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <h4>Product Code</h4>
+                                    <div id="produtoCode" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <h4>Description</h4>
+                                    <div id="produtoDescription" class="result-box"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção: Validação de Caixa -->
+            <section id="validacao" class="content-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Validação de Caixa</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input type="text" id="localId" placeholder="LOCAL_ID" class="form-control">
+                            <input type="text" id="caixaId" placeholder="CAIXA_ID" class="form-control">
+                            <button id="btnConsultarCaixa" class="btn btn-primary">
+                                <i class="fas fa-search"></i> Consultar Caixa
+                            </button>
+                            <button id="btnLimparCaixa" class="btn btn-secondary">
+                                <i class="fas fa-eraser"></i> Limpar
+                            </button>
+                        </div>
+
+                        <!-- Informações do Caixa -->
+                        <div class="result-section">
+                            <h4>CAIXA</h4>
+                            <div class="result-grid">
+                                <div class="result-item">
+                                    <label>Portal Meep:</label>
+                                    <div id="portalMeep" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <label>Data Inicial:</label>
+                                    <div id="dataInicial" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <label>Data Final:</label>
+                                    <div id="dataFinal" class="result-box"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- VLR Invoice Order -->
+                        <div class="result-section">
+                            <h4>VLR Invoice Order</h4>
+                            <div class="result-grid">
+                                <div class="result-item">
+                                    <label>Crédito:</label>
+                                    <div id="invoiceCredito" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <label>Débito:</label>
+                                    <div id="invoiceDebito" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <label>Dinheiro:</label>
+                                    <div id="invoiceDinheiro" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <label>Outros:</label>
+                                    <div id="invoiceOutros" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <label>Desconto:</label>
+                                    <div id="invoiceDesconto" class="result-box"></div>
+                                </div>
+                                <div class="result-item total">
+                                    <label>Total:</label>
+                                    <div id="invoiceTotal" class="result-box"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TRANSAÇÃO OFFLINE -->
+                        <div class="result-section">
+                            <h4>TRANSAÇÃO OFFLINE</h4>
+                            <div class="result-grid">
+                                <div class="result-item">
+                                    <label>Crédito:</label>
+                                    <div id="offlineCredito" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <label>Débito:</label>
+                                    <div id="offlineDebito" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <label>Dinheiro:</label>
+                                    <div id="offlineDinheiro" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <label>Outros:</label>
+                                    <div id="offlineOutros" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <label>Desconto:</label>
+                                    <div id="offlineDesconto" class="result-box"></div>
+                                </div>
+                                <div class="result-item total">
+                                    <label>Total:</label>
+                                    <div id="offlineTotal" class="result-box"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TRANSAÇÃO POS -->
+                        <div class="result-section">
+                            <h4>TRANSAÇÃO POS</h4>
+                            <div class="result-grid">
+                                <div class="result-item">
+                                    <label>Crédito:</label>
+                                    <div id="posCredito" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <label>Débito:</label>
+                                    <div id="posDebito" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <label>Dinheiro:</label>
+                                    <div id="posDinheiro" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <label>Outros:</label>
+                                    <div id="posOutros" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <label>Desconto:</label>
+                                    <div id="posDesconto" class="result-box"></div>
+                                </div>
+                                <div class="result-item total">
+                                    <label>Total:</label>
+                                    <div id="posTotal" class="result-box"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Caixa Sankhya (Entrada Manual) -->
+                        <div class="result-section">
+                            <h4>Caixa Sankhya</h4>
+                            <div class="result-grid">
+                                <div class="result-item">
+                                    <label>Crédito:</label>
+                                    <input type="text" id="sankhyaCredito" class="form-control" placeholder="0,00">
+                                </div>
+                                <div class="result-item">
+                                    <label>Débito:</label>
+                                    <input type="text" id="sankhyaDebito" class="form-control" placeholder="0,00">
+                                </div>
+                                <div class="result-item">
+                                    <label>Dinheiro:</label>
+                                    <input type="text" id="sankhyaDinheiro" class="form-control" placeholder="0,00">
+                                </div>
+                                <div class="result-item">
+                                    <label>Outros:</label>
+                                    <input type="text" id="sankhyaOutros" class="form-control" placeholder="0,00">
+                                </div>
+                                <div class="result-item">
+                                    <label>Desconto:</label>
+                                    <input type="text" id="sankhyaDesconto" class="form-control" placeholder="0,00">
+                                </div>
+                                <div class="result-item total">
+                                    <label>Total:</label>
+                                    <input type="text" id="sankhyaTotal" class="form-control" placeholder="0,00">
+                                </div>
+                            </div>
+                            <div class="button-group">
+                                <button id="btnDiferencaInvoice" class="btn btn-primary">
+                                    <i class="fas fa-calculator"></i> Diferença InvoiceOrder
+                                </button>
+                                <button id="btnDiferencaOffline" class="btn btn-primary">
+                                    <i class="fas fa-calculator"></i> Diferença T.OFFLINE
+                                </button>
+                                <button id="btnDiferencaPos" class="btn btn-primary">
+                                    <i class="fas fa-calculator"></i> Diferença T.POS
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Diferença -->
+                        <div class="result-section">
+                            <h4>Diferença</h4>
+                            <div class="result-grid">
+                                <div class="result-item">
+                                    <label>DIF_Crédito:</label>
+                                    <div id="difCredito" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <label>DIF_Débito:</label>
+                                    <div id="difDebito" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <label>DIF_Dinheiro:</label>
+                                    <div id="difDinheiro" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <label>DIF_Outros:</label>
+                                    <div id="difOutros" class="result-box"></div>
+                                </div>
+                                <div class="result-item">
+                                    <label>DIF_Desconto:</label>
+                                    <div id="difDesconto" class="result-box"></div>
+                                </div>
+                                <div class="result-item total">
+                                    <label>DIF_Total:</label>
+                                    <div id="difTotal" class="result-box"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <div class="toast-content">
+            <i id="toastIcon" class="fas fa-info-circle"></i>
+            <div class="message">
+                <span id="toastTitle" class="text text-1">Notificação</span>
+                <span id="toastMessage" class="text text-2">Mensagem de notificação</span>
+            </div>
+        </div>
+        <i class="fa-solid fa-xmark close"></i>
+        <div class="progress"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
